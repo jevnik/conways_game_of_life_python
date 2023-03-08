@@ -1,5 +1,5 @@
 import pygame
-
+import time
 tile = 20
 
 def main():
@@ -38,7 +38,7 @@ def main():
                     game_state[mouse_x][mouse_y] = 0
                 
             elif event.type == pygame.KEYDOWN:
-                if event.key ==pygame.K_RETURN:
+                if event.key == pygame.K_RETURN:
                     print("enter pressed")
                     simulation(display, game_state)
         
@@ -116,13 +116,14 @@ def simulation(display, game_state):
             for j in range(len(game_state[i])):
                 num = num_neighbours(game_state,i,j)
                 if destiny(num) == 1:
-                    game_state[i][j] == 1
+                    game_state[i][j] = 1
                 elif destiny(num) == 0:
-                    game_state[i][j] == 0
+                    game_state[i][j] = 0
                 else:
                     pass
 
         #clock.tick(10)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -134,6 +135,10 @@ def simulation(display, game_state):
                         pygame.draw.rect(display,"white",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
                     elif game_state[i][j] == 0:
                         pygame.draw.rect(display,"black",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
+
+
+        time.sleep(0.1)
+        pygame.display.flip() 
 
 
 if __name__ == "__main__":
