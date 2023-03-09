@@ -3,7 +3,7 @@ import time
 tile = 20
 
 def main():
-    w,h = 50,50
+    w,h = 20,20
 
     game_res = (w*tile,h*tile)
 
@@ -42,14 +42,7 @@ def main():
                     print("enter pressed")
                     simulation(display, game_state)
         
-        
-        for i in range(len(game_state)):
-            for j in range(len(game_state[i])):
-                if game_state[i][j] == 1:
-                    pygame.draw.rect(display,"white",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
-                elif game_state[i][j] == 0:
-                    pygame.draw.rect(display,"black",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
-
+        draw(game_state,display)
         pygame.display.flip()        
 
 
@@ -109,7 +102,7 @@ def destiny(x):
 
 
 def simulation(display, game_state):
-    #clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
 
     while True:
         for i in range(len(game_state)):
@@ -122,24 +115,25 @@ def simulation(display, game_state):
                 else:
                     pass
 
-        #clock.tick(10)
+        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
 
-        for i in range(len(game_state)):
-                for j in range(len(game_state[i])):
-                    if game_state[i][j] == 1:
+        draw(game_state,display)
+        pygame.display.flip()
+        clock.tick(10)
+         
+
+def draw(x,display):
+    for i in range(len(x)):
+                for j in range(len(x[i])):
+                    if x[i][j] == 1:
                         pygame.draw.rect(display,"white",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
-                    elif game_state[i][j] == 0:
+                    elif x[i][j] == 0:
                         pygame.draw.rect(display,"black",pygame.Rect(i*tile,j*tile,tile-1,tile-1))
-
-
-        time.sleep(0.1)
-        pygame.display.flip() 
-
 
 if __name__ == "__main__":
     main()
