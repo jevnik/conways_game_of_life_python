@@ -1,9 +1,10 @@
 import pygame
 import time
+import copy
 tile = 20
 
 def main():
-    w,h = 20,20
+    w,h = 25,25
 
     game_res = (w*tile,h*tile)
 
@@ -95,7 +96,9 @@ def num_neighbours(x,i,j):
 def destiny(x):
     if x == 3:
         return 1
-    elif x < 2 or x > 3 :
+    elif x < 2:
+        return 0
+    elif x > 3:
         return 0
     else:
         return 2
@@ -103,29 +106,28 @@ def destiny(x):
 
 def simulation(display, game_state):
     clock = pygame.time.Clock()
-
+    
     while True:
+        game_state_temp = copy.deepcopy(game_state)
         for i in range(len(game_state)):
             for j in range(len(game_state[i])):
                 num = num_neighbours(game_state,i,j)
                 if destiny(num) == 1:
-                    game_state[i][j] = 1
+                    game_state_temp[i][j] = 1
                 elif destiny(num) == 0:
-                    game_state[i][j] = 0
+                    game_state_temp[i][j] = 0
                 else:
                     pass
-
-        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-
+        game_state = copy.deepcopy(game_state_temp)
+        
         draw(game_state,display)
         pygame.display.flip()
-        clock.tick(10)
-         
+        clock.tick(5)         
 
 def draw(x,display):
     for i in range(len(x)):
@@ -137,3 +139,7 @@ def draw(x,display):
 
 if __name__ == "__main__":
     main()
+
+
+
+    
